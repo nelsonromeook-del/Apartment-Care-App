@@ -1,0 +1,1 @@
+# This file s used to create json fiiles to store data

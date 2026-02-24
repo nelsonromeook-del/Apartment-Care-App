@@ -1,0 +1,1 @@
+#This file enables the admin to ost announcements to all the tenants

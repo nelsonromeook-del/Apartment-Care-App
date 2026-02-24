@@ -1,0 +1,1 @@
+#Starts the application or is the entry point for the system
