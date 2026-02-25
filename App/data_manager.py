@@ -53,7 +53,4 @@ class AnnouncementRepository(JSONRepository):
     def __init__(self):
         super().__init__("announcements.json")
 
-
-class RentRepository(JSONRepository):
-    def __init__(self):
-        super().__init__("rents.json")      
+  
