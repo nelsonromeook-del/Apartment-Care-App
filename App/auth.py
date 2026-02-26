@@ -20,16 +20,15 @@ class AuthManager:
     def __init__(self):
         self.data_manager = DataManager("data/users.json")
 
-    # Hash password using SHA256
-    def hash_password(self, password):
-        return hashlib.sha256(password.encode()).hexdigest()
 
-    # Check if username already exists
+    def hash_password(self, password):
+        return hashlib.sha256(password.encode()).hexdigest() # Hashing the password using SHA-256
+
     def user_exists(self, username):
         users = self.data_manager.load()
         return any(user["username"] == username for user in users)
 
-    # Register new user
+    
     def register_user(self, username, password, role):
         if self.user_exists(username):
             return False
@@ -45,7 +44,7 @@ class AuthManager:
         self.data_manager.save(users)
         return True
 
-    # Login user
+    
     def login(self, username, password):
         users = self.data_manager.load()
         hashed_password = self.hash_password(password)
