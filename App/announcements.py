@@ -1,37 +1,34 @@
-#This file enables the admin to post announcements to all
 from data_manager import DataManager
-
 
 class Announcement:
     def __init__(self, message, posted_by):
         self.message = message
         self.posted_by = posted_by
 
-    def to_dict(self):
-        return {
-            "message": self.message,
-            "posted_by": self.posted_by
-        }
+    def display(self):
+        print(f"\n{self.posted_by} says:")
+        print(f"  {self.message}")
 
 
-class AnnouncementManager:
-    FILE = "data/announcements.json"
+class AnnouncementManager(Announcement):
+    FILE = "Data/announcements.json"
 
     def __init__(self):
-        # Load announcements when the object is created
-        self.announcements = DataManager.read_file(self.FILE)
+        data = DataManager.read_file(self.FILE)
+        self.announcements = data if data else []
 
     def add_announcement(self, message, posted_by):
-        new_announcement = Announcement(message, posted_by)
-        self.announcements.append(new_announcement.to_dict())
+        if not message.strip():
+            print("Please write a message before posting.")
+            return
+        self.announcements.append({"message": message, "posted_by": posted_by})
         DataManager.write_file(self.FILE, self.announcements)
-        print("Announcement added successfully.")
+        print("Your announcement has been posted!")
 
     def view_announcements(self):
         if not self.announcements:
-            print("No announcements available.")
+            print("No announcements yet.")
             return
-
+        print("\n--- Announcements ---")
         for announcement in self.announcements:
-            print("\nPosted By:", announcement["posted_by"])
-            print("Message:", announcement["message"])
+            print(f"\n{announcement['posted_by']} says: {announcement['message']}")
