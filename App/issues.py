@@ -1,4 +1,7 @@
 #this file enables users to post issues to the admin.
+from data_manager import DataManager
+from decorators import log_event
+
 class Issue:
     def __init__(self,issue_id,house,description,status="Pending"):
         self._issue_id = issue_id
