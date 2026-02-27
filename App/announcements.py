@@ -10,7 +10,7 @@ class Announcement:
         print(f"  {self.message}")
 
 
-class AnnouncementManager(Announcement):
+class AnnouncementManager:
     FILE = "Data/announcements.json"
 
     def __init__(self):
