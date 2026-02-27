@@ -1,0 +1,14 @@
+[
+    {
+        "id": 1,
+        "house": "Nelson",
+        "description": "No water",
+        "status": "Resolved"
+    },
+    {
+        "id": 2,
+        "house": "B32",
+        "description": "No water",
+        "status": "Pending"
+    }
+]

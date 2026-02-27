@@ -2,6 +2,10 @@
 
 from auth import AuthManager
 from menu import Menu
+from colorama import init
+from colorama import Fore, Style 
+
+init(autoreset=True)
 
 
 class ApartmentCareApp:
@@ -10,8 +14,8 @@ class ApartmentCareApp:
 
     def run(self):
         while True:
-            print("-------------- ApartmentCare App ---------------")
-            print("""
+            print(Fore.CYAN + Style.BRIGHT + "-------------- ApartmentCare App ---------------")
+            print(Fore.BLUE + Style.BRIGHT + """
             1. Register
             2. Login
             3. Exit
@@ -21,46 +25,46 @@ class ApartmentCareApp:
 
             # ---------------- REGISTER ----------------
             if choice == "1":
-                username = input("Username: ").strip()
+                house = input("House Number: ").strip()
                 password = input("Password: ").strip()
                 role = input("Role (tenant/admin): ").strip().lower()
 
                 if role not in ("tenant", "admin"):
-                    print("Invalid role ❌")
+                    print(Fore.RED + Style.BRIGHT + "Invalid role ❌")
                     continue
 
-                success = self.auth.register_user(username, password, role)
+                success = self.auth.register_user(house, password, role)
 
                 if success:
-                    print("Registered successfully 😎")
+                    print(Fore.GREEN + "Registered successfully 😎")
                 else:
-                    print("User already exists 💀")
+                    print(Fore.RED + "User already exists 💀")
 
             # ---------------- LOGIN ----------------
             elif choice == "2":
-                username = input("Username: ").strip()
+                house = input("House Number: ").strip()
                 password = input("Password: ").strip()
 
-                user = self.auth.login(username, password)
+                user = self.auth.login(house, password)
 
                 if not user:
-                    print("Invalid login ❌")
+                    print(Fore.RED + "Invalid login ❌")
                 else:
                     # Convert User object → dict (Menu expects dict)
+                    print(Fore.GREEN + Style.BRIGHT + "Login Successful😎")
                     user_data = {
-                        "username": user.username,
+                        "house": user._house,
                         "role": user.role
                     }
-
                     Menu(user_data).run()
 
             # ---------------- EXIT ----------------
             elif choice == "3":
-                print("Goodbye 👋")
+                print(Fore.MAGENTA + Style.BRIGHT + "Goodbye 👋")
                 break
 
             else:
-                print("Invalid choice, try again")
+                print(Fore.RED + Style.BRIGHT + "Invalid choice, try again")
 
 
 if __name__ == "__main__":

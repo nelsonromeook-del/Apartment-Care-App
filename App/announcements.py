@@ -1,4 +1,5 @@
 from data_manager import DataManager
+from decorators import log_event
 
 class Announcement:
     def __init__(self, message, posted_by):
@@ -10,20 +11,21 @@ class Announcement:
         print(f"  {self.message}")
 
 
-class AnnouncementManager(Announcement):
+class AnnouncementManager:
     FILE = "Data/announcements.json"
 
     def __init__(self):
         data = DataManager.read_file(self.FILE)
         self.announcements = data if data else []
 
+    @log_event("New Announcement Posted")
     def add_announcement(self, message, posted_by):
         if not message.strip():
             print("Please write a message before posting.")
             return
         self.announcements.append({"message": message, "posted_by": posted_by})
         DataManager.write_file(self.FILE, self.announcements)
-        print("Your announcement has been posted!")
+        print("Your announcement has been posted😎")
 
     def view_announcements(self):
         if not self.announcements:

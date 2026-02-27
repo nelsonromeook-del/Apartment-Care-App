@@ -3,13 +3,13 @@ import hashlib
 
 
 class User:
-    def __init__(self, username, role):
-        self._username = username
+    def __init__(self, house, role):
+        self._house = house
         self._role = role
 
     @property
-    def username(self):
-        return self._username
+    def house(self):
+        return self._house
 
     @property
     def role(self):
@@ -18,26 +18,26 @@ class User:
 
 class AuthManager:
     def __init__(self):
-        self.data_manager = DataManager("data/users.json")
+        self.data_manager = DataManager("Data/users.json")
 
 
     def hash_password(self, password):
-        return hashlib.sha256(password.encode()).hexdigest() # Hashing the password using SHA-256
-
-    def user_exists(self, username):
+        return hashlib.sha256(password.encode()).hexdigest() # Hashing the password using SHA-256 
+    
+    def user_exists(self, house):
         users = self.data_manager.load()
-        return any(user["username"] == username for user in users)
+        return any(user.get("house") == house for user in users)
 
     
-    def register_user(self, username, password, role):
-        if self.user_exists(username):
+    def register_user(self, house, password, role):
+        if self.user_exists(house):
             return False
 
         hashed_password = self.hash_password(password)
 
         users = self.data_manager.load()
         users.append({
-            "username": username,
+            "house": house,
             "password": hashed_password,
             "role": role
         })
@@ -45,12 +45,12 @@ class AuthManager:
         return True
 
     
-    def login(self, username, password):
+    def login(self, house, password):
         users = self.data_manager.load()
         hashed_password = self.hash_password(password)
 
         for user in users:
-            if user["username"] == username and user["password"] == hashed_password:
-                return User(user["username"], user["role"])
+            if user["house"] == house and user["password"] == hashed_password:
+                return User(user["house"], user["role"])
 
         return None
